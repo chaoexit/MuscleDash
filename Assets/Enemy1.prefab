@@ -89,6 +89,10 @@ MonoBehaviour:
   ispeed: 0
   isRunning: 0
   isDead: 0
+  hpbar: {fileID: 0}
+  player: {fileID: 0}
+  y: 0
+  z: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

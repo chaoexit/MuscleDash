@@ -6,6 +6,8 @@ var maxLevel : int = expLimit.length;
 
 var player : Transform;
 
+static var nPoring : int;
+static var PoringMod : boolean;
 
 var gauge : float;
 var gaugeMax : float;
@@ -23,15 +25,18 @@ var level : int;
 var playerStatus : String[] = ["alive", "dead"];
 var gameStatus : String[] = ["defaultMode", "stopMode", "explodeMode", "freezeMode"];
 
-var progressBarEmpty : Texture2D;
-var progressBarFull : Texture2D;
+//var progressBarEmpty : Texture2D;
+//var progressBarFull : Texture2D;
 
 function OnGUI() {
-	GUI.DrawTexture(Rect(0, 0, 100, 10), progressBarEmpty);
-	GUI.DrawTexture(Rect(0, 0, gauge/gaugeMax * 100, 10), progressBarFull);
+//	GUI.DrawTexture(Rect(0, 0, 100, 10), progressBarEmpty);
+//	GUI.DrawTexture(Rect(0, 0, gauge/gaugeMax * 100, 10), progressBarFull);
 }
 
 function Start () {
+	nPoring = 0;
+	PoringMod = false;
+
 	gauge = 10;
 	gauge = 100;
 	kangGrang = 0;

@@ -51,6 +51,7 @@
      <Compile Include="Assets\Enemy1AI.js" />
      <Compile Include="Assets\Enemy1Father.js" />
      <Compile Include="Assets\GameManager.js" />
+     <Compile Include="Assets\GaugeController.js" />
      <Compile Include="Assets\LogoController.js" />
      <Compile Include="Assets\Main_GUI_Controller.js" />
      <Compile Include="Assets\ObstacleCheck.js" />

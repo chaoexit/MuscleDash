@@ -3,6 +3,8 @@
 var PlayerT : GameObject;
 var speed : float;
 
+var mainCam : Camera;
+
 function Start () {
 	PlayerT = GameObject.FindGameObjectWithTag("Player");
 	speed = 0.4f;
@@ -29,4 +31,15 @@ function Update () {
 	else {
 		rigidbody2D.velocity.y = 0;
 	}
+	
+	if ( Input.touchCount > 0 ) {
+		if (PlayerController.state == "default") {
+			PlayerT.gameObject.SendMessage("Skills", 1);
+			//Application.LoadLevel("Stage1");
+		}
+	}
+}
+
+function OnGUI() {
+	GUI.Button( new Rect( mainCam.ScreenToWorldPoint( new Vector3 (Screen.width ,0f ,0f )).x * 3/4, mainCam.ScreenToWorldPoint( new Vector3 (0f, Screen.height, 0f )).y * 3/ 4, 50, 50 ), "D" );
 }

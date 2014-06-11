@@ -6,8 +6,7 @@ function Start () {
 }
 
 function Update () {
-	if ((Input.touchCount == 1) &&
-         (Input.GetTouch(0).phase == TouchPhase.Began) )
+	if ( Input.touchCount >= 1 )
     {
     	Application.LoadLevel("Stage1");
     }

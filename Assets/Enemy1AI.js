@@ -7,6 +7,14 @@ var ispeed : float;
 var isRunning : boolean;
 var isDead : boolean;
 
+//=========================================================
+
+var hpbar : GameObject;
+var player : GameObject;
+var hp : float =1f;
+var y : float ;
+var z : float ;
+
 function Start () {
 	//GameManager.nPoring +=1;
 	animator = this.GetComponent(Animator);
@@ -16,12 +24,30 @@ function Start () {
 	isRunning = false;
 	isDead = false;
 	this.gameObject.tag = "Enemy";
+	hp = 1f;
+	y =0.8432606f;
+	z = 0.2432606f;
 }
 
 function Update () {
 	if ( isDead ) {
 		return;
 	}
+	
+	if(hp <= 0) {
+		isDead = true;
+ 		Destroy(this.gameObject);
+ 		GaugeController.playerEnergy+=0.2f;
+ 		Debug.Log(GaugeController.playerEnergy);
+ 		GameManager.nPoring -= 1;
+ 		if(GameManager.nPoring == 0){
+ 			GameManager.PoringMod = true;
+ 			hp = 0.25f;
+ 		}
+ 	}
+ 		
+ 	hpbar.transform.localScale = Vector3(hp,y,z);
+	
 	if((PlayerController.py-this.transform.position.y)<=1.5)
 	{
 		/*if(rigidbody2D.velocity.x < ispeed && rigidbody2D.velocity.x >0)
@@ -113,10 +139,10 @@ function randomwalk(){
 			rigidbody2D.gravityScale = 1;
 			rigidbody2D.velocity.x =-5f;
 			transform.localScale.x = 1;
-			Debug.Log(rigidbody2D.velocity.x);
+			//Debug.Log(rigidbody2D.velocity.x);
 			yield WaitForSeconds(1);
 			rigidbody2D.gravityScale = 1;
-			Debug.Log(rigidbody2D.velocity.x);
+			//Debug.Log(rigidbody2D.velocity.x);
 			//rigidbody2D.velocity.x = 0;
 			//yield WaitForSeconds(300f);
 			isRunning = false;
@@ -142,19 +168,24 @@ function randomwalk(){
 function OnCollisionEnter2D( colInfo : Collision2D ) {
 
 		if( colInfo.gameObject.tag == "Player" ) {
-			isDead = true;
-			yield WaitForSeconds(3);
-			Destroy(this.gameObject);
 			//Enemy1Father.enemy1Count -= 1;
+			colInfo.gameObject.SendMessage("ApplyDamage", 0.03f);
 		}	
+		
+		if ( colInfo.gameObject.tag == "Player" && PlayerController.state == "explode") {	
+			ApplyDamage(PlayerController.lvl* PlayerController.score);
+			rigidbody2D.AddForce( new Vector2(this.transform.position.x - colInfo.transform.position.x, this.transform.position.y - colInfo.transform.position.y), ForceMode2D.Impulse );
+			yield WaitForSeconds(2);
+			Destroy(this.gameObject);
+		}
 }
 
 function OnTriggerEnter2D(col: Collider2D) {
 	if(col.gameObject.tag == "Block"){
-		Debug.Log("collide");
 		rigidbody2D.velocity.x -= 5f;
 		transform.localScale.x = 1;
 	}
+
 }
 
 function OnTriggerStay2D(col : Collider2D) {
@@ -162,16 +193,19 @@ function OnTriggerStay2D(col : Collider2D) {
 		return;
 	}
 	if(col.gameObject.tag == "Block"){
-		Debug.Log("collide");
+		//Debug.Log("collide");
 		rigidbody2D.velocity.x -= 3f;
 		transform.localScale.x = 1;
 	}
 	else if(col.gameObject.tag == "Block2"){
-		Debug.Log("collide");
+		//Debug.Log("collide");
 		rigidbody2D.velocity.x += 3f;
 		transform.localScale.x = -1;
 	}
 }
 
+function ApplyDamage(damage : float){
+	hp -= damage;
+}
 
 
