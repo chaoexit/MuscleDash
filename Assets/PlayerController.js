@@ -55,7 +55,7 @@ function Update () {
 	//if ( Input.gyro.attitude.y < 0  && Input.gyro.rotationRate.y != 0) {
 		//if(rigidbody2D.velocity.x < max)
 		//{
-			if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 5 )
+			if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 7 )
 			{
 				transform.position.x += speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));			
 				//transform.position.x += speed * Mathf.Abs(Input.gyro.attitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
@@ -70,7 +70,7 @@ function Update () {
 	//if ( Input.gyro.attitude.y > 0 && Input.gyro.rotationRate.y != 0) {
 		//if(rigidbody2D.velocity.x > -max)
 		//{
-			if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 5 )
+			if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 7 )
 			{
 				transform.position.x -= speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
 				//transform.position.x -= speed * Mathf.Abs(Input.gyro.attitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
