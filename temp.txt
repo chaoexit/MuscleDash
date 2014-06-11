@@ -1,0 +1,21 @@
+//	if(Input.GetKey(KeyCode.W)){
+//		//if(rigidbody2D.velocity.y < max)
+//		//	{
+//				rigidbody2D.velocity.y += speed * 3;
+//		//	}
+//	}
+//	else if(Input.GetKey(KeyCode.D)){
+//		//if(rigidbody2D.velocity.x < max)
+//		//	{
+//				rigidbody2D.position.x += speed;
+//		//	}
+//	}
+//	else if(Input.GetKey(KeyCode.A)){
+//		//if(rigidbody2D.velocity.x < -max)
+//		//	{
+//				rigidbody2D.position.x -= speed;
+//		//	}
+//	}
+
+
+update temp

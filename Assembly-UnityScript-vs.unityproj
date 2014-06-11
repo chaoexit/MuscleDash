@@ -46,9 +46,18 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BlockScript.js" />
      <Compile Include="Assets\CameraScripts.js" />
+     <Compile Include="Assets\Enemy1AI.js" />
+     <Compile Include="Assets\Enemy1Father.js" />
+     <Compile Include="Assets\GameManager.js" />
+     <Compile Include="Assets\LogoController.js" />
+     <Compile Include="Assets\Main_GUI_Controller.js" />
+     <Compile Include="Assets\ObstacleCheck.js" />
      <Compile Include="Assets\PlayerController.js" />
      <Compile Include="Assets\PoringAI.js" />
+     <Compile Include="Assets\test.js" />
+     <Compile Include="Assets\textAppear.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
