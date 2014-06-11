@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CameraScripts.js">
     <Files>
-      <File FileName="Assets/CameraScripts.js" Line="12" Column="1" />
-      <File FileName="Assets/PlayerController.js" Line="14" Column="18" />
+      <File FileName="Assets/CameraScripts.js" Line="8" Column="13" />
+      <File FileName="Assets/PlayerController.js" Line="73" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

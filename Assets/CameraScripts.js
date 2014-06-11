@@ -5,7 +5,7 @@ var speed : float;
 
 function Start () {
 	PlayerT = GameObject.FindGameObjectWithTag("Player");
-	speed = 0.2f;
+	speed = 0.4f;
 	this.camera.orthographicSize = 8;
 }
 
