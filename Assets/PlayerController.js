@@ -39,7 +39,7 @@ static var score : float = 0;
 
 
 var style : GUISkin;
-var announcement : String = "";
+static var announcement : String = "";
 
 //=========================================================================================
 
@@ -153,9 +153,8 @@ function delayMode() {
 	yield WaitForSeconds(1);
 	setGUI("Start!");
 	
-	state = "explode";
+	state = "shake";
 	isCalculating = true;
-	explodeMode();
 }
 
 function setGUI( s : String ) {
@@ -163,74 +162,55 @@ function setGUI( s : String ) {
 }
 
 function explodeMode() {
-	//if ( isCalculating ) {
-		calculateDamage();
-		//isCalculating = false;
-	//}
 	isInState = false;
 	readyToExplode = true;
 	//Calculate Damage
 	isExploded = false;
+	state = "explode";
 }
 
 function calculateDamage() {
-	Input.gyro.enabled = true;
-	var scx : float = 0;
-	var scy : float = 0;
-	var scz : float = 0;
-	var multix : float =0;
-	var multiy : float = 0;
-	var multiz : float =0;	
 
-	if(scx>scy && scx>scz)
-	{
-		multix = 0.8f;
-		if(scy>scz)
-		{
-			multiy =  1f;
-			multiz = 1.2f; 
+	Input.gyro.enabled = true;
+
+  		if(scx>scy && scx>scz) {
+			multix = 0.8f;
+			if(scy>scz) {
+				multiy =  1f;
+				multiz = 1.2f; 
+			} else if(scy<scz) {
+				multiy = 1.2f;
+				multiz = 1f;
+			}			
+		} else if(scy>scx && scy>scz) {
+			multiy = 0.8f;
+			if(scx>scz)	{
+				multix =  1f;
+				multiz = 1.2f; 
+			} else if(scx<scz) {
+				multix = 1.2f;
+				multiz = 1f;
+			}
+		} else if(scz>scx && scz>scy) {
+			multiz = 0.8f;
+			if(scx>scy) {
+				multix =  1f;
+				multiy = 1.2f; 
+			} else if(scx<scy) {
+				multix = 1.2f;
+				multiy = 1f;
+			}		
 		}
-		else if(scy<scz)
-		{
-			multiy = 1.2f;
-			multiz = 1f;
-		}		
-	}
-	else if(scy>scx && scy>scz)
-	{
-		multiy = 0.8f;
-		if(scx>scz)
-		{
-			multix =  1f;
-			multiz = 1.2f; 
-		}
-		else if(scx<scz)
-		{
-			multix = 1.2f;
-			multiz = 1f;
-		}		
-	}
-	else if(scz>scx && scz>scy)
-	{
-		multiz = 0.8f;
-		if(scx>scy)
-		{
-			multix =  1f;
-			multiy = 1.2f; 
-		}
-		else if(scx<scy)
-		{
-			multix = 1.2f;
-			multiy = 1f;
-		}		
-	}
+	
 	
 	scx += (Abs(Input.gyro.rotationRate.x)/20);
 	scy += (Abs(Input.gyro.rotationRate.y)/20);
 	scz += (Abs(Input.gyro.rotationRate.z)/20);
 	
-	score = scx*multix+scy*multiy+scz*multiz;
+	score += scx*multix+scy*multiy+scz*multiz;
+	
 	announcement = "score: " + score;
+
 }
 
 function explode() {
@@ -269,76 +249,44 @@ function Skills( tempInt : int ) {
 	state = "delay";
 }
 
+function resetScore() {
+	var scx : float = 0;
+	var scy : float = 0;
+	var scz : float = 0;
+	var multix : float =0;
+	var multiy : float = 0;
+	var multiz : float =0;
+	
+	score = 0;
+}
+
 function Update () {
 	if( !isStarted ) {
 		return;
 	}
-	
+		
 	if (state == "default") {
 		defaultMode();
 	} else if (state == "delay" && !isInState) {
+		GaugeController.playerEnergy = 0;
 		delayMode();
-	} else if (state == "explode") {
+	} else if (state == "shake") {
 		timer -= Time.deltaTime;
-  		if (timer > 0){
-  			if(scx>scy && scx>scz)
-			{
-				multix = 0.8f;
-				if(scy>scz)
-				{
-					multiy =  1f;
-					multiz = 1.2f; 
-				} else if(scy<scz) {
-					multiy = 1.2f;
-					multiz = 1f;
-				}			
-			} else if(scy>scx && scy>scz) {
-				multiy = 0.8f;
-				if(scx>scz)	{
-					multix =  1f;
-					multiz = 1.2f; 
-				}
-			else if(scx<scz)
-				{
-				multix = 1.2f;
-				multiz = 1f;
-				}		
-			}
-			else if(scz>scx && scz>scy)
-			{
-				multiz = 0.8f;
-				if(scx>scy)
-			{
-					multix =  1f;
-					multiy = 1.2f; 
-			}
-			else if(scx<scy)
-			{
-				multix = 1.2f;
-				multiy = 1f;
-			}		
+  		if (timer > 0) {
+			calculateDamage();
+		} else {
+			explodeMode();
 		}
-	
-	scx += (Abs(Input.gyro.rotationRate.x)/20);
-	scy += (Abs(Input.gyro.rotationRate.y)/20);
-	scz += (Abs(Input.gyro.rotationRate.z)/20);
-	
-	score += scx*multix+scy*multiy+scz*multiz;
-	
-	announcement = "score: " + score;
-    		//explodeMode();
-  		} else {
-  			if (readyToExplode) {
-				explode();
-			} else if (isExploded) {
-			  	score = 0;
-				state = "default";
-    			timer = shakeTime;
-    		}
+  	} else if (state == "explode") {
+  		if (readyToExplode) {
+			explode();
+		} else if (isExploded) {
+		  	resetScore();
+			state = "default";
+    		timer = shakeTime;
     	}
-    	
     }
-	
+    
 	if ( transform.position.x > 18 ) {
 		transform.position.x = 17;
 	}
@@ -356,7 +304,7 @@ function Update () {
 
 function OnCollisionEnter2D( colInfo : Collision2D ) {
 	if( colInfo.gameObject.tag == "Ground" ) {
-		Debug.Log("jump false");
+		//Debug.Log("jump false");
 	}
 	
 	if(colInfo.gameObject.tag == "Enemy"){
@@ -368,17 +316,16 @@ function OnCollisionEnter2D( colInfo : Collision2D ) {
 
 function OnTriggerEnter2D(col : Collider2D) {
 	if(col.gameObject.tag =="Enemy"){
-		Debug.Log("Hit!");
+		//Debug.Log("Hit!");
 		col.gameObject.SendMessage("ApplyDamage", (damageX));
 		player.rigidbody2D.velocity.x *=-0.5;
 	}
 }
 
 function ApplyDamage(damage : float) {
-	Debug.Log("Test");
+	//Debug.Log("Test");
 	hp -= damage;
 }
-
 
 function OnGUI() {
 	GUI.skin = style;

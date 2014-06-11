@@ -5,6 +5,8 @@ var speed : float;
 
 var mainCam : Camera;
 
+var timer : float = 0;
+
 function Start () {
 	PlayerT = GameObject.FindGameObjectWithTag("Player");
 	speed = 0.4f;
@@ -34,12 +36,25 @@ function Update () {
 	
 	if ( Input.touchCount > 0 ) {
 		if (PlayerController.state == "default") {
-			PlayerT.gameObject.SendMessage("Skills", 1);
-			//Application.LoadLevel("Stage1");
+			
+			if (GaugeController.playerEnergy >= 1) {
+				PlayerT.gameObject.SendMessage("Skills", 1);
+			} else {
+				PlayerController.announcement = "Not Enough Energy";
+				timer = 2;
+
+			}
 		}
+	}
+	
+	if (timer > 0) {
+		timer -= Time.deltaTime;
+	}
+	if (timer <= 0) {
+		PlayerController.announcement = "";
 	}
 }
 
-function OnGUI() {
-	GUI.Button( new Rect( mainCam.ScreenToWorldPoint( new Vector3 (Screen.width ,0f ,0f )).x * 3/4, mainCam.ScreenToWorldPoint( new Vector3 (0f, Screen.height, 0f )).y * 3/ 4, 50, 50 ), "D" );
-}
+//function OnGUI() {
+//	GUI.Button( new Rect( mainCam.ScreenToWorldPoint( new Vector3 (Screen.width ,0f ,0f )).x * 3/4, mainCam.ScreenToWorldPoint( new Vector3 (0f, Screen.height, 0f )).y * 3/ 4, 50, 50 ), "D" );
+//}
