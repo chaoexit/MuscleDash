@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var audio : AudioSource;
+var audioExplode : AudioSource;
 
 function Start () {
 
@@ -14,6 +14,7 @@ function OnCollisionEnter2D( colInfo : Collision2D ) {
 	if ( colInfo.gameObject.tag == "Player" && PlayerController.state == "explode") {	
 		Debug.Log("bomb!!");
 		//Audio Here
+		audioExplode.Play();
 		colInfo.gameObject.rigidbody2D.mass = 100000000;
 		rigidbody2D.isKinematic = false;
 		this.GetComponent(BoxCollider2D).isTrigger = false;

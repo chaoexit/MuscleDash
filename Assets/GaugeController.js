@@ -15,7 +15,7 @@ function Update() {
  
 function OnGUI () {
 // Create one Group to contain both images , the first two numbers define the on screen placement
-GUI.BeginGroup (Rect (350,10,128,16));
+GUI.BeginGroup (Rect (275,10,128,16));
  
 // Draw the background image
 GUI.Box (Rect (0,0,128,16), bgImage, energyBar);

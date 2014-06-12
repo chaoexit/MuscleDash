@@ -3,6 +3,7 @@ import System.Math;
 
 var shakeTime = 10;
 
+var audioDash : AudioSource;
 
 var animator : Animator;
 var speed : float;
@@ -94,7 +95,8 @@ function walk() {
 		this.transform.localScale.x = -1;
 		if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 9 ) {
 			transform.position.x += speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
-			damageX = speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));		
+			damageX = speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
+			audioDash.Play();
 		} else {
 			transform.position.x += speed * Mathf.Abs(offsetAttitude.y); //+ (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
 			damageX = speed * Mathf.Abs(offsetAttitude.y);
@@ -106,6 +108,8 @@ function walk() {
 		if ( Mathf.Abs(Input.gyro.rotationRate.y) >= 9 ) {
 			transform.position.x -= speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
 			damageX = speed * Mathf.Abs(offsetAttitude.y) + (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
+			audioDash.Play();
+	
 		} else {
 			transform.position.x -= speed * Mathf.Abs(offsetAttitude.y); //+ (0.1 * Mathf.Abs(Input.gyro.rotationRate.y));
 			damageX = speed * Mathf.Abs(offsetAttitude.y);
@@ -330,5 +334,5 @@ function ApplyDamage(damage : float) {
 function OnGUI() {
 	GUI.skin = style;
 	//GUI.Label (new Rect(Screen.width/2-50,Screen.height/2,1000,1000), announcement);
-	GUI.Label (new Rect(-75, 75,1000,1000), announcement);
+	GUI.Label (new Rect(-175, 75,1000,1000), announcement);
 }

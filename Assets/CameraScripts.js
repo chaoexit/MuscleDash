@@ -41,17 +41,16 @@ function Update () {
 				PlayerT.gameObject.SendMessage("Skills", 1);
 			} else {
 				PlayerController.announcement = "Not Enough Energy";
-				timer = 2;
-
+				timer = 3;
 			}
 		}
 	}
 	
-	if (timer > 0) {
+	if (timer > 1) {
 		timer -= Time.deltaTime;
-	}
-	if (timer <= 0) {
+	} else if (timer > 0) {
 		PlayerController.announcement = "";
+		timer = 0;
 	}
 }
 
